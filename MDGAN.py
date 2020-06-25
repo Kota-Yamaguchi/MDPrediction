@@ -515,7 +515,10 @@ class GAN_GP():
 
 if __name__ == '__main__':
     from collect_traj import collect
-    X_train = collect()
+    path_traj = sys.argv[1]
+    path_gro = sys.argv[2]
+    ref = sys.argv[3]
+    X_train = collect(path_traj, path_gro, ref)
     print(X_train.shape) 
     gan = GAN_GP()
     gan.train(X_train,epochs=300001,batch_size=BATCH_SIZE,save_interval=50000)

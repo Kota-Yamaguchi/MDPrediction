@@ -1,6 +1,7 @@
 import numpy as np
 from score import mdanatra
 import glob
+import sys
 
 def make_dataset(rdata, n ,n_prev = 100):
            data, target =[], []
@@ -21,14 +22,17 @@ def min_max(x, axis=None):
         result = (x-min)/(max-min)
         return result
 
-def collect():
+def collect(path_traj, path_gro, ref ):
     traj_list=[]
-    traj_list_dir =glob.glob("protein/lyzo/ha/*/cyc*/cand*/can_CA.xtc", recursive=True)
-    top_list_dir = glob.glob("protein/lyzo/ha/*/cyc*/cand*/CA.gro", recursive=True)
+    #traj_list_dir =glob.glob("protein/lyzo/ha/*/cyc*/cand*/can_CA.xtc", recursive=True)
+    traj_list_dir = glob.glob(path_traj, recursive=True)
+    #top_list_dir = glob.glob("protein/lyzo/ha/*/cyc*/cand*/CA.gro", recursive=True)
+    top_list_dir = glob.glob(path_gro, recursive=True)
     mdtra = mdanatra()
     print(np.array(traj_list_dir).shape)
     for traj, top in zip(traj_list_dir, top_list_dir):
-        mdtra.fitting(top,traj,"em_CA.gro")
+        #mdtra.fitting(top,traj,"em_CA.gro")
+        mdtra.fitting(top, traj, path)
         rmsd=mdtra.rmsd_()
         #PC = mdtra.PCA()
         #PC = PC.T[0]
